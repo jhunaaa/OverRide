@@ -2,8 +2,8 @@
 
 The level01 binary wait for an username and a password.
 the password can be found with decompilation/GDB and we will get dat_wil.
-But for the next step, we saw that fget get a max size of 100.
-Knowing there isnt any system we will have to use a shellcode
+But for the next step, we saw two fget, on at 256 and an other at 100.
+Knowing there isnt any call system or read file we will have to use a shellcode.
 
 Doing a segfault and print the register give us enough information to continue :
 eip            0x36613561	0x36613561
@@ -12,7 +12,7 @@ a_user_name have a limit of 256, so we can to put our shellcode in, and access i
 
 with enough test we saw eip is overwrited on the 81 char so 80 padding on the first fgets
 using objdump -t level01 we get the address of a_user_name : 0804a040, put in usefull format will be \x40\xa0\x04\08
-Now, using the second fgets we do a call on the
+Now, using the second fgets we do a call on the shellcode
 
 first fget : dat_wil + padding + shellcode
 second fget : padding + address
