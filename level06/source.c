@@ -8,7 +8,6 @@ int auth(char *login, unsigned int serial)
 	unsigned int hash;
 	size_t len;
 
-	/* Remove the trailing newline added by fgets() */
 	login[strcspn(login, "\n")] = '\0';
 
 	len = strnlen(login, 32);
@@ -16,7 +15,6 @@ int auth(char *login, unsigned int serial)
 	if (len <= 5)
 		return 1;
 
-	/* Anti-debug check */
 	if (ptrace(PTRACE_TRACEME, 0, 1, 0) == -1)
 	{
 		puts("******************");
@@ -25,7 +23,6 @@ int auth(char *login, unsigned int serial)
 		return 1;
 	}
 
-	/* Initialize the hash using the 4th character of the login */
 	hash = (login[3] ^ 4919) + 6221293;
 
 	for (size_t i = 0; i < len; i++)
