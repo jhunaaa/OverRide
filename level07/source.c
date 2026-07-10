@@ -1,17 +1,38 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
-int read_number(int t[100])
+int read_number(int t[100]) {
 	int unum;
 
 	printf("index: ");
 	unum = get_unum();
-	printf(" Number at data[%u] is %u\n", unum, *(_DWORD *)(a1 + 4 * unum));
+	printf(" Number at data[%u] is %u\n", unum, t[unum]);
 	return 0;
-	}
+}
 
+int store_number(int t[100]) {
+	int unum;
+	int value;
+
+	printf(" Number: ");
+	value = get_unum();
+	printf(" Index: ");
+	unum = get_unum();
+	if (unum % 3 == 0 || (value >> 24) == 0xb7) {
+		puts(" *** ERROR! ***");
+		puts("   This index is reserved for wil!");
+		puts(" *** ERROR! ***");
+		return 1;
+	}
+	t[unum] = value;
+	return 0;
+}
 
 int main(void) {
 	int t[100];
 	char s[20];
+	int number;
 
 	puts(
     "----------------------------------------------------\n"
