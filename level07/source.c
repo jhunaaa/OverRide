@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
+int get_unum(void) {
+	unsigned int unum;
+	scanf("%u", &unum);
+	return unum;
+}
+
 int read_number(int t[100]) {
 	int unum;
 
@@ -48,22 +54,24 @@ int main(void) {
 
 	while(true) {
 		printf("Input command: ");
+		number = 1;
 		fgets(s, 20, stdin);
 		s[strlen(s) - 1] = 0;
-		number = 1;
-		if (strcmp("store", s) == 0) {
+		if (memcmp("store", s, 5) == 0) {
 			number = store_number(t);
 		}
-		else if (strcmp("read", s) == 0) {
+		else if (memcmp("read", s, 4) == 0) {
 			number = read_number(t);
 		}
-		else if (strcmp("quit", s) == 0)
+		else if (memcmp("quit", s, 4) == 0)
 			return (0);
-		else if (number) {
+
+		if (number) {
 			printf(" Failed to do %s command\n", s);
 		}
 		else {
 			printf(" Completed %s command successfully\n", s);
 		}
+		memset(s, 0, 5);
 	}
 }
